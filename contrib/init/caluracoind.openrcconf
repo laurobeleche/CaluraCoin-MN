@@ -1,0 +1,26 @@
+# /etc/conf.d/caluracoind: config file for /etc/init.d/caluracoind
+
+# Config file location
+#BITCOIND_CONFIGFILE="/etc/caluracoin/caluracoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
+#BITCOIND_PIDDIR="/var/run/caluracoind"
+
+# What filename to give the pidfile
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/caluracoind.pid"
+
+# Where to write caluracoind data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/caluracoind"
+
+# User and group to own caluracoind process
+#BITCOIND_USER="caluracoin"
+#BITCOIND_GROUP="caluracoin"
+
+# Path to caluracoind executable
+#BITCOIND_BIN="/usr/bin/caluracoind"
+
+# Nice value to run caluracoind under
+#BITCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+BITCOIND_OPTS=""

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Caluracoin
+Comment=Caluracoin P2P Cryptocurrency
+Exec=caluracoin-qt %u
+Terminal=false
+Type=Application
+Icon=caluracoin128
+MimeType=x-scheme-handler/caluracoin;
+Categories=Office;Finance;
+Name[en_US]=caluracoin-qt.desktop

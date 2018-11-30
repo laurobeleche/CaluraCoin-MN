@@ -1,0 +1,26 @@
+[Unit]
+Description=Caluracoin's distributed currency daemon
+After=network.target
+
+[Service]
+User=caluracoin
+Group=caluracoin
+
+Type=forking
+PIDFile=/var/lib/caluracoind/caluracoind.pid
+
+ExecStart=/usr/bin/caluracoind -daemon -pid=/var/lib/caluracoind/caluracoind.pid \
+          -conf=/etc/caluracoin/caluracoin.conf -datadir=/var/lib/caluracoind
+
+ExecStop=-/usr/bin/caluracoin-cli -conf=/etc/caluracoin/caluracoin.conf \
+         -datadir=/var/lib/caluracoind stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,29 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/caluracoin_bg.qm</file>
+        <file alias="ca">locale/caluracoin_ca.qm</file>
+        <file alias="cs">locale/caluracoin_cs.qm</file>
+        <file alias="da">locale/caluracoin_da.qm</file>
+        <file alias="de">locale/caluracoin_de.qm</file>
+        <file alias="en">locale/caluracoin_en.qm</file>
+        <file alias="en_US">locale/caluracoin_en_US.qm</file>
+        <file alias="es">locale/caluracoin_es.qm</file>
+        <file alias="fi">locale/caluracoin_fi.qm</file>
+        <file alias="fr_FR">locale/caluracoin_fr_FR.qm</file>
+        <file alias="it">locale/caluracoin_it.qm</file>
+        <file alias="ja">locale/caluracoin_ja.qm</file>
+        <file alias="ko_KR">locale/caluracoin_ko_KR.qm</file>
+        <file alias="nl">locale/caluracoin_nl.qm</file>
+        <file alias="pl">locale/caluracoin_pl.qm</file>
+        <file alias="pt">locale/caluracoin_pt.qm</file>
+        <file alias="pt_BR">locale/caluracoin_pt_BR.qm</file>
+        <file alias="ro_RO">locale/caluracoin_ro_RO.qm</file>
+        <file alias="ru">locale/caluracoin_ru.qm</file>
+        <file alias="sk">locale/caluracoin_sk.qm</file>
+        <file alias="sv">locale/caluracoin_sv.qm</file>
+        <file alias="tr">locale/caluracoin_tr.qm</file>
+        <file alias="uk">locale/caluracoin_uk.qm</file>
+        <file alias="zh_CN">locale/caluracoin_zh_CN.qm</file>
+        <file alias="zh_TW">locale/caluracoin_zh_TW.qm</file>
+    </qresource>
+</RCC>

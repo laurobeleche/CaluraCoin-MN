@@ -1,0 +1,6 @@
+usr/local/bin/caluracoin-qt usr/bin
+share/pixmaps/caluracoin32.xpm usr/share/pixmaps
+share/pixmaps/caluracoin16.xpm usr/share/pixmaps
+share/pixmaps/caluracoin128.xpm usr/share/pixmaps
+debian/caluracoin-qt.desktop usr/share/applications
+debian/caluracoin-qt.protocol usr/share/kde4/services/
