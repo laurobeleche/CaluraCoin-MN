@@ -154,14 +154,15 @@ public:
         genesis.nBits = 0x1e0ffff0;
         genesis.nNonce = 938567;
 		
-		MineGenesis(genesis, bnProofOfWorkLimit);
+		//MineGenesis(genesis, bnProofOfWorkLimit);
 
         hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == uint256("0x00000e391c8f8348f7f4252014c1f9bb7f9c939bd3b9e3635c76289506069fba"));
         assert(genesis.hashMerkleRoot == uint256("0xd3e43392d9de86f02c7ef65270975ea2c682dde4cec15dd88640441251f2f083"));
 
         // DNS Seeding
-        vSeeds.push_back(CDNSSeedData("185.223.30.226", "158.223.30.226"));
+        vSeeds.push_back(CDNSSeedData("185.223.30.226", "185.223.30.226"));
+		vSeeds.push_back(CDNSSeedData("207.148.11.38", "207.148.11.38"));
 
         // Caluracoin addresses start with 'Z'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 29);
