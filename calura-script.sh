@@ -37,7 +37,7 @@ fi
 
 ## COMPILE AND INSTALL
 wget https://github.com/laurobeleche/CaluraCoin-MN/releases/download/v1.0.2.1/linux.zip
-unzip linux*
+unzip linux.zip
 sudo chmod 755 caluracoin*
 sudo mv caluracoin* /usr/bin
 
