@@ -55,7 +55,7 @@ before_script:
     - chmod +x $TRAVIS_BUILD_DIR/contrib/devtools/check-doc.py;
     - chmod +x $TRAVIS_BUILD_DIR/contrib/devtools/lint-all.sh;
     - if [ "$CHECK_DOC" = 1 ]; then contrib/devtools/check-doc.py; fi
-    - if [ "$CHECK_DOC" = 1 -a "$TRAVIS_EVENT_TYPE" = "pull_request" ]; then contrib/devtools/lint-all.sh; fi
+    #- if [ "$CHECK_DOC" = 1 -a "$TRAVIS_EVENT_TYPE" = "pull_request" ]; then contrib/devtools/lint-all.sh; fi
     #- if [ "$CHECK_LOGPRINT" = 1 ]; then contrib/devtools/logprint-scanner.py; fi
     - unset CC; unset CXX
     - mkdir -p depends/SDKs depends/sdk-sources
