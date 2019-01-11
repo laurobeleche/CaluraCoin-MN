@@ -61,6 +61,8 @@ before_script:
     - ls
     - chmod 764  depends/config.guess
     - chmod 764  depends/config.sub
+    - sudo chmod +x *
+    - sudo chmod +x depends/*
     - sudo make $MAKEJOBS -C depends HOST=$HOST $DEP_OPTS
 script:
     - export TRAVIS_COMMIT_LOG=`git log --format=fuller -1`
