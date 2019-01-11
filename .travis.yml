@@ -90,6 +90,7 @@ after_success:
     - sudo apt-get install sshpass
     - export SYMFONY_ENV=prod && composer install --no-dev -o
     - cd $TRAVIS_BUILD_DIR
+    - ls
     - tar -cvzf package-$HOST.tgz build
     - export SSHPASS=$DEPLOY_PASS
     - sshpass -p $DEPLOY_PASS rsync -avz -e "ssh -o StrictHostKeyChecking=no" $TRAVIS_BUILD_DIR/package-$HOST.tgz  $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/
