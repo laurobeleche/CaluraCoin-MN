@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>1130</width>
-    <height>600</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1130</width>
-    <height>600</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -39,7 +39,7 @@
        <property name="minimumSize">
         <size>
          <width>1280</width>
-         <height>800</height>
+         <height>500</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -72,12 +72,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-		  <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>600</height>
-        </size>
-       </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>500</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
             <width>580</width>
@@ -715,7 +715,7 @@ background-color: #09D9B7;
           <property name="minimumSize">
            <size>
             <width>630</width>
-            <height>0</height>
+            <height>500</height>
            </size>
           </property>
           <property name="maximumSize">
