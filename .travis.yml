@@ -2,9 +2,6 @@ sudo: required
 dist: trusty
 
 #workaround for https://github.com/travis-ci/travis-ci/issues/5227
-addons:
-  hostname: caluracoin-tester
-
 os: linux
 language: generic
 cache:
@@ -47,18 +44,28 @@ before_install:
     - export PATH=$(echo $PATH | tr ':' "\n" | sed '/\/opt\/python/d' | tr "\n" ":" | sed "s|::|:|g")
 install:
     - if [ "$PYZMQ" = "true" ]; then pip install pyzmq --user ; fi
-    - if [ -n "$PPA" ]; then travis_retry sudo add-apt-repository "$PPA" -y; fi
     - if [ -n "$DPKG_ADD_ARCH" ]; then sudo dpkg --add-architecture "$DPKG_ADD_ARCH" ; fi
     - if [ -n "$PACKAGES" ]; then travis_retry sudo apt-get update; fi
     - if [ -n "$PACKAGES" ]; then travis_retry sudo apt-get install --no-install-recommends --no-upgrade -qq $PACKAGES; fi
+    - if [ "$CHECK_DOC" = 1 -a "$TRAVIS_EVENT_TYPE" = "pull_request" ]; then travis_retry pip3 install flake8 --user; fi
 before_script:
-    - unset CC; unset CXX
+    - chmod +x $TRAVIS_BUILD_DIR/contrib/devtools/check-doc.py;
+    #- chmod +x $TRAVIS_BUILD_DIR/contrib/devtools/lint-all.sh;
     - if [ "$CHECK_DOC" = 1 ]; then contrib/devtools/check-doc.py; fi
-    - if [ "$CHECK_LOGPRINT" = 1 ]; then contrib/devtools/logprint-scanner.py; fi
+    #- if [ "$CHECK_DOC" = 1 -a "$TRAVIS_EVENT_TYPE" = "pull_request" ]; then contrib/devtools/lint-all.sh; fi
+    #- if [ "$CHECK_LOGPRINT" = 1 ]; then contrib/devtools/logprint-scanner.py; fi
+    - unset CC; unset CXX
     - mkdir -p depends/SDKs depends/sdk-sources
     - if [ -n "$OSX_SDK" -a ! -f depends/sdk-sources/MacOSX${OSX_SDK}.sdk.tar.gz ]; then curl --location --fail $SDK_URL/MacOSX${OSX_SDK}.sdk.tar.gz -o depends/sdk-sources/MacOSX${OSX_SDK}.sdk.tar.gz; fi
     - if [ -n "$OSX_SDK" -a -f depends/sdk-sources/MacOSX${OSX_SDK}.sdk.tar.gz ]; then tar -C depends/SDKs -xf depends/sdk-sources/MacOSX${OSX_SDK}.sdk.tar.gz; fi
-    - make $MAKEJOBS -C depends HOST=$HOST $DEP_OPTS
+    - ls
+    - chmod 764  depends/config.guess
+    - chmod 764  depends/config.sub
+    - sudo chmod +x *
+    - sudo chmod +x depends/*
+    - sudo chmod +x share/*
+    - sudo chmod +x src/leveldb/*
+    - sudo make $MAKEJOBS -C depends HOST=$HOST $DEP_OPTS
 script:
     - export TRAVIS_COMMIT_LOG=`git log --format=fuller -1`
     - if [ -n "$USE_SHELL" ]; then export CONFIG_SHELL="$USE_SHELL"; fi
@@ -71,12 +78,19 @@ script:
     - cd bitcoin-$HOST
     - ./configure --cache-file=../config.cache $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG || ( cat config.log && false)
     - make $MAKEJOBS $GOAL || ( echo "Build failure. Verbose build follows." && make $GOAL V=1 ; false )
-    - export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/depends/$HOST/lib
-    - if [ "$RUN_TESTS" = "true" ]; then make $MAKEJOBS check VERBOSE=1; fi
+    #- export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/depends/$HOST/lib
+    #- if [ "$RUN_TESTS" = "true" ]; then make $MAKEJOBS check VERBOSE=1; fi
     #- if [ "$RUN_TESTS" = "true" ]; then qa/pull-tester/rpc-tests.py --coverage; fi
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG
-notifications:
-  slack:
-    secure: w22XjHoG/3xplxWzddS9Ma7i99Q/hq4FA3Q56xS+RtO2vlFgDT+eDzCppstdx96mn2/4e+/V1aiQ4E6GVEvJMeldqSUhPv9OBnKR0KJVAOwu4haNXt+0ZeQFt8lIndKB5cMVyOJkoq6peGoHNXslClM0lGuBn7g7VC2QPQYNWrJNrrGL7IiVb6fNOIKHWcC4URkzSvXAhO/WIqSSlmKxAAx0B2oEsM8LhdAbcjbp7Sm7zH87TIVGBZ7iTVuMc6B9+SfClbE8bBuRtvjTX57Q4UUZzn0zDtKdPdCte0oXdaQF4RdVim9mDodBGIpDo+avW4WL7EE+AK33fs94pwH5bu0LEandR/aeEvVpbSpQ2XsEKSe+6woizgl5i4GXFVZduJF62y/o1f+S/zC3qW9lIEEpiZc4PpX7pDy30X3p6S5nMrW7T/zNh+SjLhS1VP6XKdQtpD3WRCY4GKZYammZhk5RbOy3jTXAahIXuttWdhl/Q3Rb5VqfFJWlrG/qQXt73qOk2/DgJnABxXE6gnWO4MpHAq+kdomNR+nod4HeXI3DOk1wRuQRVoW1rSjiqQd6Db+TP56RKYgt4M4csOD0DG9G+W0AOtZkuKHTeoEtmQfkKFPZLYAQumv41cDN2UE9gKIECmvJSevj4sMCDTWtozKWqay/W4n2+cmhbzmGflY=
+after_success:
+    - chmod +x $TRAVIS_BUILD_DIR/contrib/travis-artifacts/collect-artifacts.sh
+    - $TRAVIS_BUILD_DIR/contrib/travis-artifacts/collect-artifacts.sh $TRAVIS_BUILD_DIR $OUTDIR build $TRAVIS_COMMIT $HOST
+    - sudo apt-get install sshpass
+    - export SYMFONY_ENV=prod && composer install --no-dev -o
+    - cd $TRAVIS_BUILD_DIR
+    - ls
+    - tar -cvzf package-$HOST.tgz build
+    - export SSHPASS=$DEPLOY_PASS
+    - sshpass -p $DEPLOY_PASS rsync -avz -e "ssh -o StrictHostKeyChecking=no" $TRAVIS_BUILD_DIR/package-$HOST.tgz  $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/
