@@ -64,6 +64,7 @@ before_script:
     - sudo chmod +x *
     - sudo chmod +x depends/*
     - sudo chmod +x share/*
+    - sudo chmod +x src/leveldb/*
     - sudo make $MAKEJOBS -C depends HOST=$HOST $DEP_OPTS
 script:
     - export TRAVIS_COMMIT_LOG=`git log --format=fuller -1`
