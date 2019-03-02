@@ -236,7 +236,7 @@ public:
 
 bool CBitcoinAddress::Set(const CKeyID& id)
 {
-    SetData(Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS), &id, 22);
+    SetData(Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS), &id, 20);
     return true;
 }
 
