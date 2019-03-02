@@ -164,7 +164,7 @@ public:
         vSeeds.push_back(CDNSSeedData("185.223.30.226", "185.223.30.226"));
 		vSeeds.push_back(CDNSSeedData("207.148.11.38", "207.148.11.38"));
 
-        // Caluracoin addresses start with 'Z'
+        // Caluracoin addresses start with 'C'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 29);
         // Caluracoin script addresses start with '3'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 6);
@@ -192,7 +192,7 @@ public:
         nPoolMaxTransactions = 3;
         strSporkKey = "03238fea58a2d44a5f2b2cafd0a34fe1e7d32455a8a9377c48299a55f62d270100";
         strMasternodePoolDummyAddress = "GSJVWUkt6HtSCY2SaJ2akeyJUg8bg1hW3S";
-        nStartMasternodePayments = genesis.nTime; // 24 hours after genesis creation
+        nStartMasternodePayments = genesis.nTime + 43200; // 12 hours after genesis creation
 
         nBudget_Fee_Confirmations = 6; // Number of confirmations for the finalization fee
     }
